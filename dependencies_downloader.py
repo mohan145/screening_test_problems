@@ -1,7 +1,3 @@
-import subprocess
-import json
-import sys
-
 
 def install_package(package, installation_failed_packages):
     try:
@@ -9,8 +5,6 @@ def install_package(package, installation_failed_packages):
     except subprocess.CalledProcessError:
         installation_failed_packages.append(package)
 
-
-# usage dependecies_downloader.py file_name.json
 def main():
     file_name = sys.argv[1]
     file = open(file_name)
@@ -23,8 +17,14 @@ def main():
     for dependency in dependencies:
         install_package(dependency, installation_failed_packages)
 
-    print(installation_failed_packages)
-
+    if installation_failed_packages:
+        print("Failed To Install Below Dependencies")
+        for dependency in installation_failed_packages:
+            print(dependency)
+    else:
+        print("Successfully Installed all Dependencies")
+    
+    return 
 
 if __name__ == '__main__':
     main()
